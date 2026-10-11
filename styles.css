@@ -225,7 +225,6 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .contact-value { color: var(--ink); font-weight: 600; font-size: 1.02rem; word-break: break-word; }
 
-.fineprint { color: var(--ink-faint); font-size: .9rem; }
 
 /* Footer ----------------------------------------------------------------- */
 .foot { background: var(--bg); border-top: 1px solid var(--border); padding: 40px 0; }
