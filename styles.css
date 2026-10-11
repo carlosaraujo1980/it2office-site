@@ -140,6 +140,7 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .hero-in { padding: clamp(56px, 10vw, 112px) 16px; }
 .hero-in h1 { max-width: 13em; }
+.hero-in .split { margin-top: 0; align-items: center; }
 
 /* Sobrancelha: o mesmo preenchimento e a mesma borda das faixas de titulo
    dos cartoes, em escala de etiqueta. Mantem a pagina num idioma visual so. */
@@ -251,10 +252,7 @@ a:hover { text-decoration-thickness: 2px; }
 
 .prose > p:last-child { margin-bottom: 0; }
 
-/* Cartao de numeros, na coluna da direita do Sobre ------------------------ */
-.facts { position: sticky; top: 88px; }
-@media (max-width: 880px) { .facts { position: static; } }
-
+/* Cartao de numeros, na coluna da direita do hero ------------------------- */
 .facts-list { margin: 0; padding: 18px 20px; }
 .facts-list > div + div {
   margin-top: 14px; padding-top: 14px;
@@ -266,6 +264,24 @@ a:hover { text-decoration-thickness: 2px; }
   margin-bottom: 2px;
 }
 .facts-list dd { margin: 0; color: var(--ink); font-weight: 600; font-size: .98rem; }
+
+/* Citacao em destaque, na coluna da direita do Sobre ---------------------- */
+.pullquote {
+  margin: 0;
+  padding: 22px 0 22px 24px;
+  border-left: 3px solid var(--accent);
+}
+.pullquote p {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+@media (max-width: 880px) {
+  .pullquote { padding: 18px 0 18px 20px; }
+}
 
 /* Contato ---------------------------------------------------------------- */
 .split-contato .section-lede { margin: 0; }
