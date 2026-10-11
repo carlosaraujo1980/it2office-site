@@ -191,7 +191,7 @@ a:hover { text-decoration-thickness: 2px; }
   gap: 10px;
   margin: 0;
   padding: 14px 20px;
-  min-height: 68px;           /* iguala titulos de 1 e de 2 linhas */
+  min-height: 72px;           /* iguala titulos de 1 e de 2 linhas */
   background: var(--accent-soft);
   border-bottom: 1px solid var(--border);
   color: var(--ink);
