@@ -161,7 +161,16 @@ a:hover { text-decoration-thickness: 2px; }
 
 .lede { font-size: clamp(1.05rem, 2.2vw, 1.22rem); color: var(--ink-soft); max-width: 62ch; }
 
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 1.75rem; }
+/* Os botoes ocupam a coluna da direita do hero: empilhados e ocupando a
+   largura toda, viram um painel de acao em vez de dois botoes soltos.
+   No celular isso tambem e melhor - alvo grande para o polegar. */
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+.hero-actions .btn { width: 100%; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
@@ -252,7 +261,10 @@ a:hover { text-decoration-thickness: 2px; }
 
 .prose > p:last-child { margin-bottom: 0; }
 
-/* Cartao de numeros, na coluna da direita do hero ------------------------- */
+/* Cartao de numeros, na coluna da direita do Sobre ------------------------ */
+.facts { position: sticky; top: 88px; }
+@media (max-width: 880px) { .facts { position: static; } }
+
 .facts-list { margin: 0; padding: 18px 20px; }
 .facts-list > div + div {
   margin-top: 14px; padding-top: 14px;
@@ -264,24 +276,6 @@ a:hover { text-decoration-thickness: 2px; }
   margin-bottom: 2px;
 }
 .facts-list dd { margin: 0; color: var(--ink); font-weight: 600; font-size: .98rem; }
-
-/* Citacao em destaque, na coluna da direita do Sobre ---------------------- */
-.pullquote {
-  margin: 0;
-  padding: 22px 0 22px 24px;
-  border-left: 3px solid var(--accent);
-}
-.pullquote p {
-  margin: 0;
-  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: -.01em;
-  color: var(--ink);
-}
-@media (max-width: 880px) {
-  .pullquote { padding: 18px 0 18px 20px; }
-}
 
 /* Contato ---------------------------------------------------------------- */
 .split-contato .section-lede { margin: 0; }
