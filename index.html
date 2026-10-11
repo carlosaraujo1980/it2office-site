@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<!-- ====================================================================
+     ATENCAO: os tokens entre chaves duplas sao dados factuais que precisam
+     ser preenchidos antes de publicar. Eles aparecem destacados em amarelo
+     na pagina. Veja REVISAR.md na raiz do projeto.
+     ==================================================================== -->
+
+<title>it2office — Tecnologia e infraestrutura de TI para empresas</title>
+<meta name="description" content="A it2office cuida da infraestrutura de TI da sua empresa: redes, servidores, backup, Google Workspace e suporte. Atendimento remoto e presencial.">
+<link rel="canonical" href="https://it2office.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="it2office">
+<meta property="og:title" content="it2office — Tecnologia e infraestrutura de TI para empresas">
+<meta property="og:description" content="Infraestrutura, redes, servidores, backup, Google Workspace e suporte de TI para empresas.">
+<meta property="og:url" content="https://it2office.com/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="/" aria-label="it2office, página inicial">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <rect x="1.25" y="1.25" width="29.5" height="29.5" rx="7.5" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M9 21.5V10.5M9 10.5h7.5a4 4 0 0 1 0 8H9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="22.5" cy="21" r="2" fill="currentColor"/>
+      </svg>
+      <span class="brand-text">it<span class="brand-accent">2</span>office</span>
+    </a>
+
+    <nav aria-label="Navegação principal">
+      <ul class="nav">
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#como">Como trabalhamos</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a class="nav-cta" href="#contato">Falar com a gente</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <section class="hero">
+    <div class="wrap hero-in">
+      <p class="eyebrow">Infraestrutura de TI para empresas</p>
+      <h1>Sua TI funcionando, sem você precisar pensar nela.</h1>
+      <p class="lede">
+        <span class="todo">{{FRASE_DE_POSICIONAMENTO}}</span> — uma ou duas linhas
+        dizendo o que a it2office entrega e para quem. Ex.: “Cuidamos da rede, dos
+        servidores, do backup e do Google Workspace de pequenas e médias empresas.”
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contato">Solicitar atendimento</a>
+        <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos" class="section" aria-labelledby="h-servicos">
+    <div class="wrap">
+      <p class="eyebrow">Serviços</p>
+      <h2 id="h-servicos">O que cuidamos para você</h2>
+      <p class="section-lede">
+        <span class="todo">{{REVISAR_SERVICOS}}</span> — remova o que não oferece,
+        acrescente o que falta e reescreva as descrições com as suas palavras.
+      </p>
+
+      <ul class="cards">
+        <li class="card">
+          <h3>Redes e conectividade</h3>
+          <p>Projeto e manutenção de rede cabeada e Wi-Fi, segmentação, VPN e
+             links redundantes para a operação não parar.</p>
+        </li>
+        <li class="card">
+          <h3>Servidores e virtualização</h3>
+          <p>Implantação e gestão de servidores físicos e virtuais, containers,
+             monitoramento e atualização planejada.</p>
+        </li>
+        <li class="card">
+          <h3>Backup e continuidade</h3>
+          <p>Rotina de backup testada de verdade, com cópia fora do local e
+             plano de recuperação definido antes de precisar dele.</p>
+        </li>
+        <li class="card">
+          <h3>Google Workspace</h3>
+          <p>Implantação, migração de e-mail, configuração de domínio,
+             autenticação (SPF, DKIM, DMARC) e administração contínua.</p>
+        </li>
+        <li class="card">
+          <h3>Segurança</h3>
+          <p>Controle de acesso, política de senhas e MFA, proteção de
+             endpoints e revisão periódica de exposição.</p>
+        </li>
+        <li class="card">
+          <h3>Suporte ao usuário</h3>
+          <p>Atendimento remoto e presencial para o dia a dia: estações de
+             trabalho, impressão, telefonia e os imprevistos de sempre.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="como" class="section section-alt" aria-labelledby="h-como">
+    <div class="wrap">
+      <p class="eyebrow">Como trabalhamos</p>
+      <h2 id="h-como">Três passos, sem mistério</h2>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step-n" aria-hidden="true">1</span>
+          <div>
+            <h3>Diagnóstico</h3>
+            <p>Levantamos o que existe hoje — rede, servidores, backup, e-mail,
+               licenças — e documentamos o estado real, com evidência.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-n" aria-hidden="true">2</span>
+          <div>
+            <h3>Plano priorizado</h3>
+            <p>Você recebe os problemas ordenados por risco e custo, com o que
+               resolver agora e o que pode esperar. Sem pacote fechado.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-n" aria-hidden="true">3</span>
+          <div>
+            <h3>Execução e acompanhamento</h3>
+            <p>Implantamos, monitoramos e reportamos. Você sabe o que foi feito
+               e o que está sendo observado.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="sobre" class="section" aria-labelledby="h-sobre">
+    <div class="wrap narrow">
+      <p class="eyebrow">Sobre</p>
+      <h2 id="h-sobre">Quem é a it2office</h2>
+      <p>
+        <span class="todo">{{TEXTO_SOBRE}}</span> — 2 a 4 parágrafos. Sugestões do
+        que incluir: desde quando atua, que tipo de cliente atende, região de
+        atendimento, formação ou certificações relevantes, e o que te diferencia
+        de uma assistência técnica comum.
+      </p>
+    </div>
+  </section>
+
+  <section id="contato" class="section section-alt" aria-labelledby="h-contato">
+    <div class="wrap narrow">
+      <p class="eyebrow">Contato</p>
+      <h2 id="h-contato">Vamos conversar</h2>
+      <p class="section-lede">
+        Conte o que está acontecendo na sua TI que a gente responde com um
+        próximo passo concreto.
+      </p>
+
+      <div class="contact-grid">
+        <a class="contact-card" href="mailto:carlos@it2office.com">
+          <span class="contact-label">E-mail</span>
+          <span class="contact-value">carlos@it2office.com</span>
+        </a>
+        <a class="contact-card" href="https://wa.me/{{WHATSAPP_E164}}" rel="noopener">
+          <span class="contact-label">WhatsApp</span>
+          <span class="contact-value todo">{{TELEFONE}}</span>
+        </a>
+      </div>
+
+      <p class="fineprint">
+        <span class="todo">{{AREA_DE_ATENDIMENTO}}</span> — ex.: “Atendimento
+        remoto para todo o Brasil e presencial na Grande São Paulo.”
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand">it<span class="brand-accent">2</span>office</p>
+    <p class="foot-meta">
+      <span class="todo">{{RAZAO_SOCIAL}}</span> · CNPJ <span class="todo">{{CNPJ}}</span><br>
+      <a href="mailto:carlos@it2office.com">carlos@it2office.com</a>
+    </p>
+    <p class="foot-copy">© <span id="ano">2026</span> it2office. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('ano').textContent = new Date().getFullYear();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "it2office",
+  "url": "https://it2office.com/",
+  "email": "carlos@it2office.com",
+  "description": "Infraestrutura de TI para empresas: redes, servidores, backup, Google Workspace, segurança e suporte.",
+  "areaServed": "BR",
+  "serviceType": [
+    "Infraestrutura de TI",
+    "Redes corporativas",
+    "Backup e continuidade",
+    "Google Workspace",
+    "Suporte técnico"
+  ]
+}
+</script>
+
+</body>
+</html>

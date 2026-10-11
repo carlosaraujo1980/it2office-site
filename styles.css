@@ -1,0 +1,227 @@
+/* ==========================================================================
+   it2office — site institucional
+   CSS sem dependencias externas. Tokens no :root, dark mode automatico.
+   ========================================================================== */
+
+:root {
+  --bg:        #ffffff;
+  --bg-alt:    #f4f7fa;
+  --surface:   #ffffff;
+  --border:    #dde5ed;
+  --ink:       #0f2033;
+  --ink-soft:  #46596e;
+  --ink-faint: #74869a;
+  --accent:    #0d7ea8;
+  --accent-ink:#ffffff;
+  --accent-soft:#e6f3f9;
+  --shadow:    0 1px 2px rgba(15, 32, 51, .06), 0 8px 24px rgba(15, 32, 51, .06);
+  --radius:    14px;
+  --maxw:      1120px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #0b1b2b;
+    --bg-alt:    #0f2234;
+    --surface:   #13283c;
+    --border:    #23415c;
+    --ink:       #eaf2f8;
+    --ink-soft:  #a9c0d4;
+    --ink-faint: #7e99b0;
+    --accent:    #35b6e0;
+    --accent-ink:#06202c;
+    --accent-soft:#12324a;
+    --shadow:    0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px rgba(0, 0, 0, .28);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:        #0b1b2b;
+  --bg-alt:    #0f2234;
+  --surface:   #13283c;
+  --border:    #23415c;
+  --ink:       #eaf2f8;
+  --ink-soft:  #a9c0d4;
+  --ink-faint: #7e99b0;
+  --accent:    #35b6e0;
+  --accent-ink:#06202c;
+  --accent-soft:#12324a;
+  --shadow:    0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px rgba(0, 0, 0, .28);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { line-height: 1.2; letter-spacing: -.02em; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5.2vw, 3.3rem); font-weight: 700; }
+h2 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 650; }
+h3 { font-size: 1.1rem; font-weight: 650; }
+p  { margin: 0 0 1rem; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
+.wrap.narrow { max-width: 720px; }
+
+.skip {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 10px 16px; z-index: 100; border-radius: 0 0 8px 0;
+}
+.skip:focus { left: 0; }
+
+/* Marca os placeholders para nao serem publicados por engano -------------- */
+.todo {
+  background: #ffe9a8;
+  color: #4a3600;
+  padding: 0 .3em;
+  border-radius: 4px;
+  font-weight: 600;
+  box-decoration-break: clone;
+}
+
+/* Topbar ------------------------------------------------------------------ */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-in {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; min-height: 64px;
+}
+
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--ink); text-decoration: none; font-weight: 700;
+  letter-spacing: -.03em; font-size: 1.2rem;
+}
+.brand-mark { width: 28px; height: 28px; color: var(--accent); flex: none; }
+.brand-accent { color: var(--accent); }
+
+.nav { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.nav a {
+  display: inline-block; padding: 8px 12px; border-radius: 8px;
+  color: var(--ink-soft); text-decoration: none; font-size: .95rem; font-weight: 500;
+}
+.nav a:hover { color: var(--ink); background: var(--bg-alt); }
+.nav .nav-cta {
+  background: var(--accent); color: var(--accent-ink); margin-left: 6px;
+}
+.nav .nav-cta:hover { background: var(--accent); color: var(--accent-ink); filter: brightness(1.08); }
+
+@media (max-width: 820px) {
+  .nav li:not(:last-child) { display: none; }
+}
+
+/* Hero ------------------------------------------------------------------- */
+.hero {
+  background:
+    radial-gradient(60rem 28rem at 15% -10%, var(--accent-soft), transparent 70%),
+    var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.hero-in { padding: clamp(56px, 10vw, 112px) 16px; max-width: 820px; margin-inline: 0; }
+
+.eyebrow {
+  text-transform: uppercase; letter-spacing: .09em; font-size: .78rem;
+  font-weight: 700; color: var(--accent); margin: 0 0 .75rem;
+}
+
+.lede { font-size: clamp(1.05rem, 2.2vw, 1.22rem); color: var(--ink-soft); max-width: 62ch; }
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 1.75rem; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 1rem;
+  text-decoration: none; border: 1px solid transparent; cursor: pointer;
+  transition: filter .15s ease, background .15s ease, border-color .15s ease;
+}
+.btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--border); }
+.btn-ghost:hover { background: var(--bg-alt); border-color: var(--ink-faint); }
+
+/* Sections --------------------------------------------------------------- */
+.section { padding: clamp(56px, 8vw, 92px) 0; }
+.section-alt { background: var(--bg-alt); border-block: 1px solid var(--border); }
+.section-lede { color: var(--ink-soft); max-width: 62ch; }
+
+/* Cards de servico ------------------------------------------------------- */
+.cards {
+  list-style: none; margin: 2.25rem 0 0; padding: 0;
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 22px 22px 6px;
+  box-shadow: var(--shadow);
+}
+.card h3 { color: var(--ink); }
+.card p { color: var(--ink-soft); font-size: .96rem; }
+
+/* Passos ----------------------------------------------------------------- */
+.steps {
+  list-style: none; margin: 2.25rem 0 0; padding: 0;
+  display: grid; gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.step { display: flex; gap: 14px; align-items: flex-start; }
+.step-n {
+  flex: none; width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 700;
+  background: var(--accent); color: var(--accent-ink);
+}
+.step h3 { margin-bottom: .3em; }
+.step p { color: var(--ink-soft); font-size: .96rem; margin: 0; }
+
+/* Contato ---------------------------------------------------------------- */
+.contact-grid {
+  display: grid; gap: 14px; margin: 1.75rem 0 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.contact-card {
+  display: flex; flex-direction: column; gap: 4px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px;
+  text-decoration: none; box-shadow: var(--shadow);
+  transition: border-color .15s ease, transform .15s ease;
+}
+.contact-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.contact-label {
+  text-transform: uppercase; letter-spacing: .08em; font-size: .72rem;
+  font-weight: 700; color: var(--ink-faint);
+}
+.contact-value { color: var(--ink); font-weight: 600; font-size: 1.02rem; word-break: break-word; }
+
+.fineprint { color: var(--ink-faint); font-size: .9rem; }
+
+/* Footer ----------------------------------------------------------------- */
+.foot { background: var(--bg); border-top: 1px solid var(--border); padding: 40px 0; }
+.foot-in { display: grid; gap: 10px; }
+.foot-brand { font-weight: 700; font-size: 1.1rem; letter-spacing: -.03em; margin: 0; }
+.foot-meta { color: var(--ink-soft); font-size: .92rem; margin: 0; }
+.foot-copy { color: var(--ink-faint); font-size: .85rem; margin: 0; }
