@@ -243,7 +243,26 @@
   "email": "contato@it2office.com",
   "telephone": "+5511970458533",
   "description": "Direção de TI terceirizada para empresas sem departamento de TI: infraestrutura, ERP, integração com a contabilidade, segurança da informação e gestão de projetos.",
-  "areaServed": "BR",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "addressCountry": "BR"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "São Paulo",
+      "containedInPlace": {
+        "@type": "State",
+        "name": "São Paulo"
+      }
+    },
+    {
+      "@type": "AdministrativeArea",
+      "name": "Região Metropolitana de São Paulo"
+    }
+  ],
   "serviceType": [
     "Direção de TI",
     "Infraestrutura de TI",
