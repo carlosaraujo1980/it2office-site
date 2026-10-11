@@ -85,7 +85,6 @@ a:hover { text-decoration-thickness: 2px; }
    estreitando o container - estreitar o container recentraliza a secao e
    cria margens diferentes de uma secao para outra. */
 .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
-.wrap.narrow > * { max-width: 720px; }
 
 .skip {
   position: absolute; left: -9999px; top: 0;
@@ -235,10 +234,44 @@ a:hover { text-decoration-thickness: 2px; }
   background: var(--accent); color: var(--accent-ink);
 }
 
+/* Duas colunas ------------------------------------------------------------
+   Resolve o vazio a direita em monitor largo: em vez de esticar a linha de
+   texto ate ficar ilegivel, a coluna da direita recebe conteudo proprio.
+   Vira uma coluna so abaixo de 880px. */
+.split {
+  display: grid;
+  gap: 28px 40px;
+  margin-top: 2.25rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 1fr);
+  align-items: start;
+}
+@media (max-width: 880px) {
+  .split { grid-template-columns: 1fr; }
+}
+
+.prose > p:last-child { margin-bottom: 0; }
+
+/* Cartao de numeros, na coluna da direita do Sobre ------------------------ */
+.facts { position: sticky; top: 88px; }
+@media (max-width: 880px) { .facts { position: static; } }
+
+.facts-list { margin: 0; padding: 18px 20px; }
+.facts-list > div + div {
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.facts-list dt {
+  text-transform: uppercase; letter-spacing: .08em;
+  font-size: .7rem; font-weight: 700; color: var(--ink-faint);
+  margin-bottom: 2px;
+}
+.facts-list dd { margin: 0; color: var(--ink); font-weight: 600; font-size: .98rem; }
+
 /* Contato ---------------------------------------------------------------- */
+.split-contato .section-lede { margin: 0; }
 .contact-grid {
-  display: grid; gap: 16px; margin: 2.25rem 0 0;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 }
 .contact-card {
   display: block;
