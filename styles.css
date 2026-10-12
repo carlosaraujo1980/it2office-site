@@ -277,6 +277,27 @@ section[id], #conteudo { scroll-margin-top: 70px; }
 }
 .hero-actions .btn { width: 100%; }
 
+/* Abaixo de 880px o hero vira uma coluna so, e ai os botoes passavam a
+   atravessar a pagina inteira: um botao de 848px nao e um botao, e o
+   primario ficava com peso de banner. Da largura de telefone para cima eles
+   voltam a ficar lado a lado, do tamanho do proprio rotulo. */
+@media (max-width: 880px) {
+  .hero-actions { flex-direction: row; flex-wrap: wrap; }
+  .hero-actions .btn { width: auto; }
+}
+
+/* No telefone, de volta a empilhados e de largura cheia: ai o que manda e o
+   alvo para o polegar, nao a economia de espaco.
+
+   O corte e 460px, nao 600px como o do cabecalho: um botao so vira banner
+   quando passa de uns 450px de largura, e os dois lado a lado pedem 369px
+   mais a margem, o que ja cabe a partir de 420px. Entre 460 e 880 eles ficam
+   lado a lado; abaixo disso, empilhados. */
+@media (max-width: 460px) {
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; }
+}
+
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 1rem;
