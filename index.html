@@ -28,7 +28,27 @@
 <meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="color-scheme" content="light dark">
-<link rel="stylesheet" href="styles.css?v=11">
+<link rel="stylesheet" href="styles.css?v=13">
+
+<script>
+  // Antes da folha de estilo pintar qualquer coisa: se a pessoa ja escolheu
+  // um modo, aplica agora. Depois da primeira pintura a pagina piscaria no
+  // modo errado. A classe js revela o botao do rodape - sem script ele nao
+  // faria nada, entao nem aparece.
+  (function () {
+    var r = document.documentElement;
+    r.className += ' js';
+    try {
+      var t = localStorage.getItem('tema');
+      if (t === 'dark' || t === 'light') {
+        r.setAttribute('data-theme', t);
+        var cor = t === 'dark' ? '#0b1b2b' : '#ffffff';
+        var metas = document.querySelectorAll('meta[name="theme-color"]');
+        for (var i = 0; i < metas.length; i++) metas[i].content = cor;
+      }
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
 
@@ -90,21 +110,30 @@
         Da arquitetura à rotina, dirigindo quem executa.
       </p>
 
-      <ul class="cards">
-        <li class="card">
-          <h3>Estruturação do departamento</h3>
-          <p>Monto o TI que a sua empresa precisa ter: processos baseados em
-             <strong>ITIL</strong>, ferramentas e a divisão de
-             responsabilidades. Ajudo a definir o perfil de quem contratar e
-             a formar a equipe.</p>
-        </li>
-        <li class="card">
+      <!-- Dois niveis de proposito. Em cima o servico, que e um so: dirigir.
+           Embaixo as competencias que sustentam a direcao. Antes eram oito
+           cartoes iguais lado a lado, o que fazia a consultoria parecer
+           generalista - o contrario do que o texto diz. -->
+      <ul class="cards cards-lead">
+        <li class="card card-lead">
           <h3>Direção de TI</h3>
           <p>Ocupo a cadeira de direção técnica. Arquitetura, orçamento,
              fornecedor, prioridade e risco — e dirijo a equipe que executa.
              Respondo pelo funcionamento do conjunto, não por um chamado
              isolado.</p>
         </li>
+        <li class="card card-lead">
+          <h3>Estruturação do departamento</h3>
+          <p>Monto o TI que a sua empresa precisa ter: processos baseados em
+             <strong>ITIL</strong>, ferramentas e a divisão de
+             responsabilidades. Ajudo a definir o perfil de quem contratar e
+             a formar a equipe.</p>
+        </li>
+      </ul>
+
+      <p class="cards-note">O que sustenta isso, na prática:</p>
+
+      <ul class="cards">
         <li class="card">
           <h3>Infraestrutura</h3>
           <p>Rede, VPN, servidores, backup e estações.
@@ -287,6 +316,20 @@
       <a href="mailto:contato@it2office.com">contato@it2office.com</a>
     </p>
     <p class="foot-copy">© <span id="ano">2026</span> IT2office. Todos os direitos reservados.</p>
+
+    <!-- Qual rotulo e qual icone aparecem e decidido pelo CSS, com as mesmas
+         regras que escolhem as cores. Assim o botao ja nasce certo, inclusive
+         quando o modo vem do sistema e nao de uma escolha salva. -->
+    <button class="theme-toggle" type="button" id="trocar-tema">
+      <svg class="theme-ico quando-claro" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M21.3 13.6A9 9 0 1 1 10.4 2.7a7.5 7.5 0 0 0 10.9 10.9Z"/>
+      </svg>
+      <svg class="theme-ico quando-escuro" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-13.5a1 1 0 0 1-1-1V1a1 1 0 1 1 2 0v1.5a1 1 0 0 1-1 1Zm0 19a1 1 0 0 1-1-1V20a1 1 0 1 1 2 0v1.5a1 1 0 0 1-1 1ZM22.5 13H21a1 1 0 1 1 0-2h1.5a1 1 0 1 1 0 2ZM3 13H1.5a1 1 0 1 1 0-2H3a1 1 0 1 1 0 2Zm16.2-7.8-1 1a1 1 0 1 1-1.4-1.4l1-1a1 1 0 1 1 1.4 1.4ZM6.2 18.2l-1 1a1 1 0 0 1-1.4-1.4l1-1a1 1 0 0 1 1.4 1.4Zm12 1-1-1a1 1 0 0 1 1.4-1.4l1 1a1 1 0 0 1-1.4 1.4ZM5.2 6.2l-1-1a1 1 0 0 1 1.4-1.4l1 1a1 1 0 0 1-1.4 1.4Z"/>
+      </svg>
+      <span class="quando-claro">Modo escuro</span>
+      <span class="quando-escuro">Modo claro</span>
+    </button>
   </div>
 </footer>
 
@@ -310,6 +353,25 @@
       fab.classList.toggle('fab-off', naTela.indexOf(true) >= 0);
     });
     alvos.forEach(function (el) { io.observe(el); });
+  })();
+
+  // Troca de modo claro/escuro. Sem escolha salva a pagina segue o sistema,
+  // como sempre seguiu; o botao so entra na frente depois do primeiro clique.
+  (function () {
+    var botao = document.getElementById('trocar-tema');
+    if (!botao) return;
+    botao.addEventListener('click', function () {
+      var raiz = document.documentElement;
+      var escuroAgora = raiz.getAttribute('data-theme')
+        ? raiz.getAttribute('data-theme') === 'dark'
+        : matchMedia('(prefers-color-scheme: dark)').matches;
+      var novo = escuroAgora ? 'light' : 'dark';
+      raiz.setAttribute('data-theme', novo);
+      var cor = novo === 'dark' ? '#0b1b2b' : '#ffffff';
+      var metas = document.querySelectorAll('meta[name="theme-color"]');
+      for (var i = 0; i < metas.length; i++) metas[i].content = cor;
+      try { localStorage.setItem('tema', novo); } catch (e) {}
+    });
   })();
 </script>
 
