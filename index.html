@@ -23,9 +23,12 @@
 
 <link rel="icon" href="favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="favicon.png">
+<!-- A barra do navegador acompanha a cor do TOPO DA PAGINA, nao a cor da
+     marca: no modo claro o cabecalho e branco. -->
 <meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#305490" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="styles.css?v=10">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
 
@@ -33,21 +36,26 @@
 
 <header class="topbar">
   <div class="wrap topbar-in">
-    <a class="brand" href="#" aria-label="IT2office, início da página">
+    <a class="brand" href="#conteudo" aria-label="IT2office, início da página">
       <picture>
         <source srcset="logo-dark.png" media="(prefers-color-scheme: dark)">
         <img class="brand-logo" src="logo.png" alt="IT2office" width="251" height="160">
       </picture>
     </a>
 
-    <nav aria-label="Navegação principal">
-      <ul class="nav">
+    <!-- As ancoras de secao e o botao de contato sao irmaos, nao uma lista
+         so. E o que permite, no celular, o contato ficar na primeira linha
+         ao lado do logo e as ancoras descerem para uma faixa rolavel na
+         segunda - sem duplicar marcacao e sem menu sanduiche. -->
+    <nav class="nav" aria-label="Seções do site">
+      <ul>
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#como">Como eu trabalho</a></li>
         <li><a href="#sobre">Sobre</a></li>
-        <li><a class="nav-cta" href="#contato">Contato</a></li>
       </ul>
     </nav>
+
+    <a class="nav-cta" href="#contato">Contato</a>
   </div>
 </header>
 
@@ -249,7 +257,7 @@
           <span class="contact-label">E-mail</span>
           <span class="contact-value">contato@it2office.com</span>
         </a>
-        <a class="contact-card" href="https://wa.me/5511970458533" rel="noopener">
+        <a class="contact-card" href="https://wa.me/5511970458533?text=Ol%C3%A1%2C%20Carlos.%20Vim%20pelo%20site%20da%20IT2office%20e%20gostaria%20de%20conversar%20sobre%20a%20TI%20da%20minha%20empresa." rel="noopener">
           <span class="contact-label">WhatsApp</span>
           <span class="contact-value">(11) 97045-8533</span>
         </a>
@@ -259,6 +267,16 @@
   </section>
 
 </main>
+
+<!-- Atalho de contato no celular. No desktop nao aparece: la o contato esta
+     a 4,3 telas e o botao do topo basta. Fica visivel por padrao - se o
+     script nao rodar, o atalho continua funcionando. -->
+<a class="fab" href="https://wa.me/5511970458533?text=Ol%C3%A1%2C%20Carlos.%20Vim%20pelo%20site%20da%20IT2office%20e%20gostaria%20de%20conversar%20sobre%20a%20TI%20da%20minha%20empresa." rel="noopener">
+  <svg class="fab-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+    <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.25 8.24a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-2.6 4.4c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.6c.12.17 1.76 2.7 4.28 3.78.6.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.48-.6 1.69-1.19.2-.58.2-1.08.15-1.19-.06-.1-.23-.16-.48-.29-.25-.12-1.48-.73-1.71-.81-.23-.09-.4-.13-.56.12-.17.25-.64.81-.79.98-.14.16-.29.19-.54.06-.25-.12-1.06-.39-2.01-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.42h-.47Z"/>
+  </svg>
+  <span>WhatsApp</span>
+</a>
 
 <footer class="foot">
   <div class="wrap foot-in">
@@ -274,6 +292,25 @@
 
 <script>
   document.getElementById('ano').textContent = new Date().getFullYear();
+
+  // O atalho flutuante some enquanto o hero ou a secao de contato estao na
+  // tela - nos dois casos o contato ja esta a mao e o botao so atrapalha.
+  // Se o IntersectionObserver nao existir, o atalho fica sempre visivel.
+  (function () {
+    var fab = document.querySelector('.fab');
+    if (!fab || !('IntersectionObserver' in window)) return;
+    var alvos = [document.querySelector('.hero'), document.getElementById('contato')]
+                  .filter(Boolean);
+    var naTela = alvos.map(function () { return false; });
+    var io = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        var i = alvos.indexOf(e.target);
+        if (i >= 0) naTela[i] = e.isIntersecting;
+      });
+      fab.classList.toggle('fab-off', naTela.indexOf(true) >= 0);
+    });
+    alvos.forEach(function (el) { io.observe(el); });
+  })();
 </script>
 
 <script type="application/ld+json">

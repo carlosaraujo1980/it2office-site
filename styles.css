@@ -8,9 +8,10 @@
   --bg-alt:    #f4f7fa;
   --surface:   #ffffff;
   --border:    #dde5ed;
+  --border-ctrl:#7a8da3;
   --ink:       #0f2033;
   --ink-soft:  #46596e;
-  --ink-faint: #74869a;
+  --ink-faint: #627386;
   --accent:    #305490;
   --accent-ink:#ffffff;
   --accent-soft:#e8eef8;
@@ -25,6 +26,7 @@
     --bg-alt:    #0f2234;
     --surface:   #13283c;
     --border:    #23415c;
+    --border-ctrl:#4a7ba6;
     --ink:       #eaf2f8;
     --ink-soft:  #a9c0d4;
     --ink-faint: #7e99b0;
@@ -40,6 +42,7 @@
   --bg-alt:    #0f2234;
   --surface:   #13283c;
   --border:    #23415c;
+  --border-ctrl:#4a7ba6;
   --ink:       #eaf2f8;
   --ink-soft:  #a9c0d4;
   --ink-faint: #7e99b0;
@@ -51,8 +54,26 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Tira o retangulo cinza que o iOS e o Android pintam sobre o que foi
+     tocado. Em troca, todo elemento tocavel ganha :active mais abaixo. */
+  -webkit-tap-highlight-color: transparent;
+}
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Piso de toque -----------------------------------------------------------
+   touch-action: elimina a espera de 300ms pelo duplo toque.
+   user-select: o toque longo nao seleciona o rotulo do controle - mas o
+   texto da pagina continua selecionavel, que e conteudo. */
+.btn, .nav a, .nav-cta, .contact-card, .brand, .skip, .fab {
+  touch-action: manipulation;
+}
+.btn, .nav a, .nav-cta, .fab {
+  user-select: none;
+  -webkit-user-select: none;
+}
 
 body {
   margin: 0;
@@ -72,7 +93,13 @@ h3 { font-size: 1.1rem; font-weight: 650; }
 p  { margin: 0 0 1rem; }
 
 a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-a:hover { text-decoration-thickness: 2px; }
+
+/* Todo :hover deste arquivo esta atras desta consulta. Sem ela o toque num
+   celular aplica o estado de hover e ele FICA la ate o proximo toque em
+   outro lugar - o cartao do WhatsApp ficava levantado depois de tocado. */
+@media (hover: hover) and (pointer: fine) {
+  a:hover { text-decoration-thickness: 2px; }
+}
 
 :focus-visible {
   outline: 3px solid var(--accent);
@@ -101,13 +128,14 @@ a:hover { text-decoration-thickness: 2px; }
   border-bottom: 1px solid var(--border);
 }
 .topbar-in {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center;
   gap: 16px; min-height: 64px;
 }
 
 .brand {
   display: inline-flex; align-items: center;
   text-decoration: none; flex: none;
+  margin-right: auto;            /* empurra ancoras e contato para a direita */
 }
 .brand-logo { height: 42px; width: auto; display: block; }
 .brand-accent { color: var(--accent); }
@@ -116,19 +144,54 @@ a:hover { text-decoration-thickness: 2px; }
   .brand-logo { height: 34px; }
 }
 
-.nav { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
-.nav a {
+.nav ul {
+  display: flex; align-items: center; gap: 4px;
+  list-style: none; margin: 0; padding: 0;
+}
+.nav a, .nav-cta {
   display: inline-block; padding: 8px 12px; border-radius: 8px;
   color: var(--ink-soft); text-decoration: none; font-size: .95rem; font-weight: 500;
 }
-.nav a:hover { color: var(--ink); background: var(--bg-alt); }
-.nav .nav-cta {
-  background: var(--accent); color: var(--accent-ink); margin-left: 6px;
+.nav-cta {
+  flex: none;
+  background: var(--accent); color: var(--accent-ink); font-weight: 600;
 }
-.nav .nav-cta:hover { background: var(--accent); color: var(--accent-ink); filter: brightness(1.08); }
+
+@media (hover: hover) and (pointer: fine) {
+  .nav a:hover { color: var(--ink); background: var(--bg-alt); }
+  .nav-cta:hover { color: var(--accent-ink); filter: brightness(1.08); }
+}
+
+/* Celular: o cabecalho vira duas linhas. Em cima o logo e o contato; embaixo
+   as ancoras de secao numa faixa que rola na horizontal. Antes elas sumiam
+   por completo abaixo de 820px e a pagina, de 7,8 telas, ficava sem atalho
+   nenhum. Sem menu sanduiche: nao ha estado para abrir nem para fechar. */
+/* O cabecalho e grudento: sem isto a ancora para com o titulo da secao ja
+   escondido atras dele. Vale o desktop e, com a faixa, o celular. */
+section[id], #conteudo { scroll-margin-top: 70px; }
 
 @media (max-width: 820px) {
-  .nav li:not(:last-child) { display: none; }
+  section[id], #conteudo { scroll-margin-top: 106px; }
+
+  .topbar-in { flex-wrap: wrap; min-height: 52px; gap: 12px; }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    border-top: 1px solid var(--border);
+  }
+  .nav ul {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;   /* nao arrasta a pagina junto */
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 3px 0;
+    gap: 2px;
+  }
+  .nav ul::-webkit-scrollbar { display: none; }
+  .nav li { flex: none; scroll-snap-align: start; }
+  .nav a { white-space: nowrap; }
 }
 
 /* Hero ------------------------------------------------------------------- */
@@ -176,12 +239,24 @@ a:hover { text-decoration-thickness: 2px; }
   display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 1rem;
   text-decoration: none; border: 1px solid transparent; cursor: pointer;
-  transition: filter .15s ease, background .15s ease, border-color .15s ease;
+  transition: filter .15s ease, background .15s ease, border-color .15s ease,
+              transform 140ms cubic-bezier(.23, 1, .32, 1);
 }
 .btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }
-.btn-primary:hover { filter: brightness(1.08); }
-.btn-ghost { background: transparent; color: var(--ink); border-color: var(--border); }
-.btn-ghost:hover { background: var(--bg-alt); border-color: var(--ink-faint); }
+/* --border-ctrl, nao --border: aqui a borda e a UNICA coisa que identifica o
+   botao, e componente de interface precisa de 3:1. A borda decorativa dos
+   cartoes continua em --border, leve. */
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--border-ctrl); }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-ghost:hover { background: var(--bg-alt); border-color: var(--ink-faint); }
+}
+
+/* Depois do bloco de hover, de proposito: no aparelho que tem as duas coisas
+   o toque precisa ganhar do hover, e com a mesma especificidade quem vem
+   depois vence. */
+.btn:active { transform: scale(.97); }
 
 /* Sections --------------------------------------------------------------- */
 .section { padding: clamp(56px, 8vw, 92px) 0; }
@@ -229,6 +304,12 @@ a:hover { text-decoration-thickness: 2px; }
   font-size: .96rem;
 }
 
+/* Em coluna unica nao ha mais titulo nenhum para alinhar, e a altura minima
+   vira so espaco vazio multiplicado por 8 cartoes. */
+@media (max-width: 880px) {
+  .card h3, .step h3 { min-height: 0; }
+}
+
 /* Grades ----------------------------------------------------------------- */
 .cards, .steps {
   list-style: none; margin: 2.25rem 0 0; padding: 0;
@@ -272,7 +353,7 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .facts-list dt {
   text-transform: uppercase; letter-spacing: .08em;
-  font-size: .7rem; font-weight: 700; color: var(--ink-faint);
+  font-size: .75rem; font-weight: 700; color: var(--ink-faint);
   margin-bottom: 2px;
 }
 .facts-list dd { margin: 0; color: var(--ink); font-weight: 600; font-size: .98rem; }
@@ -286,9 +367,13 @@ a:hover { text-decoration-thickness: 2px; }
 .contact-card {
   display: block;
   text-decoration: none;
-  transition: border-color .15s ease, transform .15s ease;
+  border-color: var(--border-ctrl);   /* e um controle, nao um cartao */
+  transition: border-color .15s ease, transform 140ms cubic-bezier(.23, 1, .32, 1);
 }
-.contact-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+@media (hover: hover) and (pointer: fine) {
+  .contact-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+}
+.contact-card:active { transform: scale(.98); }
 .contact-label {
   text-transform: uppercase; letter-spacing: .08em;
   font-size: .72rem; font-weight: 700;
@@ -305,4 +390,48 @@ a:hover { text-decoration-thickness: 2px; }
 .foot-in { display: grid; gap: 10px; }
 .foot-brand { font-weight: 700; font-size: 1.1rem; letter-spacing: -.03em; margin: 0; }
 .foot-meta { color: var(--ink-soft); font-size: .92rem; margin: 0; }
+/* O link do rodape tinha 20px de altura - alvo pequeno demais para um canal
+   de contato. O padding vertical nao mexe no fluxo do paragrafo. */
+.foot-meta a { display: inline-block; padding: 8px 0; }
 .foot-copy { color: var(--ink-faint); font-size: .85rem; margin: 0; }
+
+/* Atalho flutuante de WhatsApp -------------------------------------------
+   So no celular, onde a secao de contato esta a 6,7 telas de rolagem. No
+   desktop sao 4,3 telas e o botao do cabecalho ja resolve. */
+.fab { display: none; }
+
+@media (max-width: 820px) {
+  .fab {
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 60;
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 20px;
+    border-radius: 999px;
+    background: var(--accent); color: var(--accent-ink);
+    font-size: .95rem; font-weight: 600; text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .28);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .fab-icon { flex: none; }
+  .fab.fab-off {
+    opacity: 0;
+    transform: translateY(10px) scale(.94);
+    pointer-events: none;
+  }
+  .fab:active { transform: scale(.96); }
+
+  /* para o atalho nao cobrir o CNPJ e o copyright */
+  .foot { padding-bottom: 104px; }
+}
+
+/* Movimento reduzido: o estado continua mudando, so nao desliza nem encolhe.
+   Resposta ao toque e informacao, nao enfeite - some o movimento, nao o
+   retorno. */
+@media (prefers-reduced-motion: reduce) {
+  .btn, .contact-card, .fab { transition: opacity .2s ease, border-color .15s ease; }
+  .btn:active, .contact-card:active, .fab:active { transform: none; }
+  .contact-card:hover { transform: none; }
+  .fab.fab-off { transform: none; }
+}
