@@ -18,6 +18,7 @@
   --shadow:    0 1px 2px rgba(15, 32, 51, .06), 0 8px 24px rgba(15, 32, 51, .06);
   --radius:    14px;
   --maxw:      1120px;
+  --logo:      url(logo.png);
   color-scheme: light;
 }
 
@@ -35,6 +36,7 @@
     --accent-ink:#0b1b2b;
     --accent-soft:#17304f;
     --shadow:    0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px rgba(0, 0, 0, .28);
+    --logo:      url(logo-dark.png);
     color-scheme: dark;
   }
 }
@@ -52,8 +54,27 @@
   --accent-ink:#0b1b2b;
   --accent-soft:#17304f;
   --shadow:    0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px rgba(0, 0, 0, .28);
+  --logo:      url(logo-dark.png);
   color-scheme: dark;
 }
+
+/* O QUE APARECE EM CADA MODO ----------------------------------------------
+   Mesma estrutura de tres regras do bloco de tokens acima - se uma mudar,
+   as duas mudam juntas. Vale para o rotulo e o icone do botao do rodape.
+   O logo nao usa isto - ele e o token --logo, junto das cores. */
+.quando-escuro { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .quando-claro  { display: none; }
+  :root:not([data-theme="light"]) .quando-escuro { display: block; }
+}
+
+:root[data-theme="dark"] .quando-claro  { display: none; }
+:root[data-theme="dark"] .quando-escuro { display: block; }
+
+/* o inverso, para quando a escolha salva contraria o sistema */
+:root[data-theme="light"] .quando-claro  { display: block; }
+:root[data-theme="light"] .quando-escuro { display: none; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -140,11 +161,15 @@ a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset:
   text-decoration: none; flex: none;
   margin-right: auto;            /* empurra ancoras e contato para a direita */
 }
-.brand-logo { height: 42px; width: auto; display: block; }
+.brand-logo {
+  display: block;
+  width: 66px; height: 42px;        /* 251:160 -> 42 x 1,56875 = 65,9 */
+  background: var(--logo) left center / contain no-repeat;
+}
 .brand-accent { color: var(--accent); }
 
 @media (max-width: 420px) {
-  .brand-logo { height: 34px; }
+  .brand-logo { width: 53px; height: 34px; }
 }
 
 .nav ul {
@@ -459,22 +484,6 @@ section[id], #conteudo { scroll-margin-top: 70px; }
   .js .theme-toggle:hover { color: var(--ink); border-color: var(--ink-faint); }
 }
 .js .theme-toggle:active { transform: scale(.97); }
-
-/* Qual metade do botao aparece. As tres regras sao as MESMAS do bloco de
-   tokens la em cima - se um dia uma mudar, as duas mudam juntas. */
-.quando-escuro { display: none; }
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .quando-claro  { display: none; }
-  :root:not([data-theme="light"]) .quando-escuro { display: inline; }
-}
-
-:root[data-theme="dark"] .quando-claro  { display: none; }
-:root[data-theme="dark"] .quando-escuro { display: inline; }
-
-/* o inverso, para quando a escolha salva contraria o sistema */
-:root[data-theme="light"] .quando-claro  { display: inline; }
-:root[data-theme="light"] .quando-escuro { display: none; }
 
 /* Atalho flutuante de WhatsApp -------------------------------------------
    Em todas as larguras. Some sobre o hero e sobre a propria secao de

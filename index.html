@@ -28,7 +28,7 @@
 <meta name="theme-color" content="#0b1b2b" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="color-scheme" content="light dark">
-<link rel="stylesheet" href="styles.css?v=13">
+<link rel="stylesheet" href="styles.css?v=15">
 
 <script>
   // Antes da folha de estilo pintar qualquer coisa: se a pessoa ja escolheu
@@ -56,11 +56,15 @@
 
 <header class="topbar">
   <div class="wrap topbar-in">
+    <!-- O logo e um token, --logo, junto das cores. Nao e um <picture>: o
+         <picture> escolhe pela preferencia do SISTEMA, na hora de ler o
+         HTML, e o CSS nao alcanca essa escolha - com o botao de tema isso
+         dava logo branco sobre fundo branco. Nao sao duas <img> tambem:
+         medimos, e o navegador baixa a escondida junto (+11,8 KB). Como
+         token, so o arquivo que vence e pedido, e o nome acessivel ja vem
+         do aria-label do link. -->
     <a class="brand" href="#conteudo" aria-label="IT2office, início da página">
-      <picture>
-        <source srcset="logo-dark.png" media="(prefers-color-scheme: dark)">
-        <img class="brand-logo" src="logo.png" alt="IT2office" width="251" height="160">
-      </picture>
+      <span class="brand-logo"></span>
     </a>
 
     <!-- As ancoras de secao e o botao de contato sao irmaos, nao uma lista
